@@ -10,7 +10,14 @@ FORGE
     puppetlabs-concat (1.2.2)
       puppetlabs-stdlib (< 5.0.0, >= 3.2.0)
     puppetlabs-stdlib (4.6.0)
+    saz-ssh (2.6.0)
+      puppetlabs-concat (>= 1.0.0)
+      puppetlabs-stdlib (>= 2.2.1)
+    saz-sudo (3.0.9)
+      puppetlabs-stdlib (>= 2.3.0)
 
 DEPENDENCIES
   jfryman-nginx (= 0.2.6)
+  saz-ssh (= 2.6.0)
+  saz-sudo (= 3.0.9)
 
