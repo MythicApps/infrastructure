@@ -46,12 +46,12 @@ python::pyvenv { '/home/api/www' :
 
 # not executing (partially)
 # need to run:
-# /home/api/virtualenvs/bin/pip --log /home/api/pip.log install -r /home/api/www/requirements.txt
 python::requirements { '/home/api/www/requirements.txt' :
-  virtualenv => '/home/api/virtualenvs',
-  owner      => 'api',
-  group      => 'api',
-  require    => [
+  virtualenv  => '/home/api/virtualenvs',
+  owner       => 'api',
+  group       => 'api',
+  forceupdate => true,  # not idempotent; but need to make it work
+  require     => [
     Package['libpq-dev'],
     Package['libmysqlclient-dev'],
   ],
