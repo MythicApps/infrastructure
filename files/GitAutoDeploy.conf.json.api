@@ -1,0 +1,9 @@
+{
+  "port": 8001,
+  "repositories":
+  [{
+    "url": "https://github.com/MythicApps/MythicAppsSite.git",
+    "path": "/home/api/www",
+    "deploy": "touch /home/api/tmp/restart-uwsgi"
+  }]
+}

@@ -44,8 +44,6 @@ python::pyvenv { '/home/api/www' :
   ],
 }
 
-# not executing (partially)
-# need to run:
 python::requirements { '/home/api/www/requirements.txt' :
   virtualenv  => '/home/api/virtualenvs',
   owner       => 'api',
@@ -67,5 +65,35 @@ python::pip { 'uwsgi' :
 exec { 'uwsgi start':
   command => '/home/api/virtualenvs/bin/uwsgi --ini /tmp/files/api-uwsgi.ini',
   unless  => '/usr/bin/pgrep uwsgi',
-  require => Python::Pip['uwsgi'],
+  require => [
+    Python::Pip['uwsgi'],
+    File['/home/api/tmp'],
+  ],
+}
+
+file { '/home/api/tmp':
+  ensure => directory,
+  owner  => 'api',
+}
+
+vcsrepo { '/home/api/deploy':
+  ensure   => present,
+  provider => git,
+  source   => 'https://github.com/logsol/Github-Auto-Deploy.git',
+  owner    => 'api',
+  group    => 'api',
+  require  => User['api'],
+}
+
+exec { 'deploy config':
+  command => '/bin/cp /tmp/files/GitAutoDeploy.conf.json.api /home/api/deploy/GitAutoDeploy.conf.json',
+  user    => 'api',
+}
+
+exec { 'start deploy server':
+  command => '/usr/bin/python GitAutoDeploy.py --daemon-mode',
+  user    => 'api',
+  cwd     => '/home/api/deploy',
+  unless  => '/usr/bin/pgrep -fc "GitAutoDeploy"',
+  require => Exec['deploy config'],
 }
