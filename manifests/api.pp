@@ -1,5 +1,7 @@
 import 'default.pp'
 
+package { ['libpq-dev', 'libmysqlclient-dev']: }
+
 include 'git'
 
 user { 'api':
@@ -24,8 +26,10 @@ class { 'python' :
 }
 
 # Ubuntu 14.04 has a broken python 3.4 install; need to add ensurepip
+# hacked idempotent
 exec { 'install ensurepip':
   command => '/usr/bin/python3.4 /tmp/files/install_ensurepip.py',
+  creates => '/usr/lib/python3.4/ensurepip',
 }
 
 python::pyvenv { '/home/api/www' :
@@ -34,5 +38,34 @@ python::pyvenv { '/home/api/www' :
   venv_dir => '/home/api/virtualenvs',
   owner    => 'api',
   group    => 'api',
-  require  => Exec['install ensurepip'],
+  require  => [
+    Exec['install ensurepip'],
+    Vcsrepo['/home/api/www'],
+  ],
+}
+
+# not executing (partially)
+# need to run:
+# /home/api/virtualenvs/bin/pip --log /home/api/pip.log install -r /home/api/www/requirements.txt
+python::requirements { '/home/api/www/requirements.txt' :
+  virtualenv => '/home/api/virtualenvs',
+  owner      => 'api',
+  group      => 'api',
+  require    => [
+    Package['libpq-dev'],
+    Package['libmysqlclient-dev'],
+  ],
+}
+
+python::pip { 'uwsgi' :
+  pkgname      => 'uwsgi',
+  virtualenv   => '/home/api/virtualenvs',
+  owner        => 'api',
+  timeout      => 1800,
+}
+
+exec { 'uwsgi start':
+  command => '/home/api/virtualenvs/bin/uwsgi --ini /tmp/files/api-uwsgi.ini',
+  unless  => '/usr/bin/pgrep uwsgi',
+  require => Python::Pip['uwsgi'],
 }
