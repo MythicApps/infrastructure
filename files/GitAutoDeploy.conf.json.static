@@ -1,0 +1,8 @@
+{
+  "port": 8001,
+  "repositories":
+  [{
+    "url": "https://github.com/MythicApps/Mythic-Apps-Public-Web.git",
+    "path": "/var/www/static.mythicapps.io"
+  }]
+}

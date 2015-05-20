@@ -88,6 +88,10 @@ vcsrepo { '/home/api/deploy':
 exec { 'deploy config':
   command => '/bin/cp /tmp/files/GitAutoDeploy.conf.json.api /home/api/deploy/GitAutoDeploy.conf.json',
   user    => 'api',
+  require => [
+    User['api'],
+    Vcsrepo['/home/api/deploy'],
+  ],
 }
 
 exec { 'start deploy server':
