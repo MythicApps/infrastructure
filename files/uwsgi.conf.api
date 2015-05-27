@@ -1,0 +1,9 @@
+description "api uwsgi instance"
+start on runlevel [2345]
+stop on runlevel [06]
+
+setuid api
+
+respawn
+
+exec /home/api/virtualenvs/bin/uwsgi --ini /tmp/files/api-uwsgi.ini

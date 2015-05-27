@@ -5,7 +5,7 @@ if [[ $(/usr/bin/id -u) -ne 0 ]]; then
   exit
 fi
 
-while getopts "spm:" o; do
+while getopts "spqm:" o; do
   case "${o}" in
     s)
       SETUP=true
@@ -15,6 +15,9 @@ while getopts "spm:" o; do
       ;;
     m)
       MANIFEST=${OPTARG}
+      ;;
+    q)
+      QUICK=true
       ;;
     *)
       usage
@@ -56,6 +59,9 @@ prepare-manifest () {
   tar xozf puppet-code.tgz
   tar xozf files.tgz
   cd puppet/
+}
+
+install-modules() {
   librarian-puppet install
 }
 
@@ -71,6 +77,7 @@ run-production-manifest () {
 
 main () {
   if [ "$SETUP" = true ]; then
+    echo "SETUP"
     create-swap-file
     install-pre-requisites
     install-puppet
@@ -78,9 +85,16 @@ main () {
   fi
 
   prepare-manifest
+
+  if [ ! "$QUICK" = true ]; then
+  echo "NOT QUICK"
+    install-modules
+  fi
+
   run-manifest
 
   if [ "$PRODUCTION" = true ]; then
+    echo "PRODUCTION"
     run-production-manifest
   fi
 }

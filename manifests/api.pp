@@ -62,18 +62,25 @@ python::pip { 'uwsgi' :
   timeout      => 1800,
 }
 
-exec { 'uwsgi start':
-  command => '/home/api/virtualenvs/bin/uwsgi --ini /tmp/files/api-uwsgi.ini',
-  unless  => '/usr/bin/pgrep uwsgi',
-  require => [
-    Python::Pip['uwsgi'],
-    File['/home/api/tmp'],
-  ],
-}
-
 file { '/home/api/tmp':
   ensure => directory,
   owner  => 'api',
+}
+
+exec { 'uwsgi upstart':
+  command  => '/usr/cp /tmp/files/uwsgi.conf.api /etc/init/uwsgi.conf',
+  creates  => '/etc/init/uwsgi.conf',
+  require  => [
+    File['/home/api/tmp'],
+    Python::Pip['uwsgi'],
+  ],
+}
+
+service { 'uwsgi':
+  ensure => running,
+  require => [
+    Exec['uwsgi upstart'],
+  ],
 }
 
 vcsrepo { '/home/api/deploy':
@@ -99,5 +106,8 @@ exec { 'start deploy server':
   user    => 'api',
   cwd     => '/home/api/deploy',
   unless  => '/usr/bin/pgrep -fc "GitAutoDeploy"',
-  require => Exec['deploy config'],
+  require => [
+    Exec['deploy config'],
+    User['api'],
+  ],
 }
