@@ -68,7 +68,7 @@ file { '/home/api/tmp':
 }
 
 exec { 'uwsgi upstart':
-  command  => '/usr/cp /tmp/files/uwsgi.conf.api /etc/init/uwsgi.conf',
+  command  => '/bin/cp /tmp/files/uwsgi.conf.api /etc/init/uwsgi.conf',
   creates  => '/etc/init/uwsgi.conf',
   require  => [
     File['/home/api/tmp'],
@@ -102,7 +102,7 @@ exec { 'deploy config':
 }
 
 exec { 'start deploy server':
-  command => '/usr/bin/python GitAutoDeploy.py --daemon-mode',
+  command => '/bin/bin/python GitAutoDeploy.py --daemon-mode',
   user    => 'api',
   cwd     => '/home/api/deploy',
   unless  => '/usr/bin/pgrep -fc "GitAutoDeploy"',

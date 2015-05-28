@@ -7,9 +7,9 @@ build: clean
 	cd tmp/; tar czf files.tgz files/
 
 deploy: build
-	scp bootstrap.sh root@$(HOST):/tmp
-	scp tmp/puppet-code.tgz root@$(HOST):/tmp
-	scp tmp/files.tgz root@$(HOST):/tmp
+	scp bootstrap.sh $(USER)@$(HOST):/tmp
+	scp tmp/puppet-code.tgz $(USER)@$(HOST):/tmp
+	scp tmp/files.tgz $(USER)@$(HOST):/tmp
 
 dev-deploy: build
 	bash dev-deploy.sh

@@ -34,7 +34,7 @@ The -m flag specifies the manifest to run.  (default, proxy, api)
 ## Deployment
 
 * Clone this repository
-* Copy the configuration to the virtual machine: `HOST=api.mythicapps.io make deploy`
+* Copy the configuration to the virtual machine: `USER=root HOST=api.mythicapps.io make deploy`
 * Connect to the virtual machine: `ssh api.mythicapps.io`
 * Run the configuration code:
 

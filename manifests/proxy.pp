@@ -5,7 +5,7 @@ class { 'nginx': }
 
 nginx::resource::upstream { 'api':
   members => [
-    'api-prd-1.mythicapps.io',
+    'api-prd-1.mythicapps.io:8080',
   ],
 }
 nginx::resource::upstream { 'static':
