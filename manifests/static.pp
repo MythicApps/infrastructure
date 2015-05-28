@@ -19,6 +19,7 @@ vcsrepo { '/var/www/static.mythicapps.io':
   source   => 'https://github.com/MythicApps/Mythic-Apps-Public-Web.git',
   owner    => 'static',
   group    => 'static',
+  revision => 'master',
   require  => User['static'],
 }
 
