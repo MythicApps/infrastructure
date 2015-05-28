@@ -11,6 +11,10 @@ FORGE
       puppetlabs-stdlib (< 5.0.0, >= 3.2.0)
     puppetlabs-git (0.3.0)
       puppetlabs-vcsrepo (>= 0.1.0)
+    puppetlabs-postgresql (4.3.0)
+      puppetlabs-apt (< 2.0.0, >= 1.8.0)
+      puppetlabs-concat (< 2.0.0, >= 1.1.0)
+      puppetlabs-stdlib (~> 4.0)
     puppetlabs-stdlib (4.6.0)
     puppetlabs-vcsrepo (1.2.0)
     saz-ssh (2.6.0)
@@ -24,6 +28,7 @@ FORGE
 DEPENDENCIES
   jfryman-nginx (= 0.2.6)
   puppetlabs-git (>= 0)
+  puppetlabs-postgresql (>= 0)
   puppetlabs-vcsrepo (>= 0)
   saz-ssh (= 2.6.0)
   saz-sudo (= 3.0.9)
