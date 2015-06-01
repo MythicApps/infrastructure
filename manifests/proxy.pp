@@ -10,7 +10,7 @@ nginx::resource::upstream { 'api':
 }
 nginx::resource::upstream { 'static':
   members => [
-    'static-prd-1.mythicapps.io',
+    'static-prd-1.mythicapps.io:3000',
   ],
 }
 
@@ -18,14 +18,10 @@ nginx::resource::vhost { 'api.mythicapps.io':
   proxy => 'http://api',
 }
 
-nginx::resource::vhost { 'static.mythicapps.io':
-  proxy => 'http://static',
-}
-
-nginx::resource::vhost { 'www.mythicapps.io':
-  proxy => 'http://static',
-}
-
 nginx::resource::vhost { 'mythicapps.io':
-  proxy => 'http://static',
+  server_name => ['mythicapps.io', 'www.mythicapps.io'],
+  proxy       => 'http://static',
+  ssl         => true,
+  ssl_cert    => '/etc/ssl/certs/www.mythicapps.io-bundle.crt',
+  ssl_key     => '/etc/ssl/private/www.mythicapps.io.key',
 }
