@@ -30,7 +30,7 @@ user { 'tec':
   shell      => '/bin/bash',
 }
 
-user { 'badsauce',
+user { 'badsauce':
   ensure     => present,
   groups     => ['sudo'],
   managehome => true,
