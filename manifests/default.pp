@@ -28,9 +28,13 @@ user { 'tec':
   groups => ['sudo'],
   managehome => true,
   shell      => '/bin/bash',
-  require    => [
-    Package['zsh'],
-  ],
+}
+
+user { 'badsauce':
+  ensure     => present,
+  groups     => ['sudo'],
+  managehome => true,
+  shell      => '/bin/bash',
 }
 
 # KEYS
@@ -44,4 +48,9 @@ ssh_authorized_key { 'tomcummings@gmail.com':
   user => 'tec',
   type => 'ssh-rsa',
   key  => 'AAAAB3NzaC1yc2EAAAABJQAAAIEAzi0WAsaqWAsndFP8EAS0ImJNh9xGd+uczW4Iw3pIg2lyHAG/SOmUn0O6DD2emiopH7LwKo6qcmytosq15PAHNdxJ+RRJJ7atKxDx/GC4JOHDrp+nZ3nta40pXLBzh6I2zh6H9Bic63JGFjc4q07DrxUkx0G+1vQcOVa5agcp9QU=',
+}
+ssh_authorized_key { 'rutowsk1@msu.edu':
+  user => 'badsauce',
+  type => 'ssh-rsa',
+  key  => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQCy8BoYSpvCS4Vxil/yFttnVJJlRMQ7Rdexxk0vQ9GGM7NT5J2TPIx1nAu7d56zY2Ocb3Q/tJ7etepJIdvWUrRhBC2Hr/mVBF/puz8EEr9QhRoFjMJQY33oRlBjkXKGdO4J6xHSED/U2SuRV8CtDTVNOctB2Ybi0Tq95A9ZRvs0mMQLP2iF6SYmjO0OObsk26OAy8MBk1zuVytFMdA727APtdAOgWbzoVfQQE6ckkn4PZoz6vcc4q+MEEN/5j9h2vQ0mX0W9DgFBSU0YPv5YU/lJCZsVUgaoyALo06EK/2HyvVFCJOF2G/jebZ/tQgCVtu3Rt7Fo26XghiK/Le+MNzJ',
 }
