@@ -8,6 +8,20 @@ user { 'api':
   ensure     => present,
   managehome => true,
 }
+file { '/home/api/conf':
+  ensure => directory,
+  owner  => 'api',
+}
+
+# not idempotent; should use modules so we could use File resources with source
+exec { 'copy configs':
+  command => '/bin/cp /tmp/files/*api* /home/api/conf',
+  user    => 'api',
+  require => [
+    User['api'],
+    File['/home/api/conf']
+  ],
+}
 
 vcsrepo { '/home/api/www':
   ensure   => present,
@@ -67,9 +81,9 @@ file { '/home/api/tmp':
   owner  => 'api',
 }
 
+# not idempotent; needs to run everytime to catch updates; make module
 exec { 'uwsgi upstart':
   command  => '/bin/cp /tmp/files/uwsgi.conf.api /etc/init/uwsgi.conf',
-  creates  => '/etc/init/uwsgi.conf',
   require  => [
     File['/home/api/tmp'],
     Python::Pip['uwsgi'],
