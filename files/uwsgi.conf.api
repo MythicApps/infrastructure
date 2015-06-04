@@ -6,4 +6,4 @@ setuid api
 
 respawn
 
-exec /home/api/virtualenvs/bin/uwsgi --ini /tmp/files/api-uwsgi.ini
+exec /home/api/virtualenvs/bin/uwsgi --ini /home/api/conf/api-uwsgi.ini
