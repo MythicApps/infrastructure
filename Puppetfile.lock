@@ -1,6 +1,9 @@
 FORGE
   remote: https://forgeapi.puppetlabs.com
   specs:
+    jdowning-rbenv (1.5.1)
+      puppetlabs-git (< 1.0.0, >= 0.0.3)
+      puppetlabs-stdlib (< 5.0.0, >= 4.1.0)
     jfryman-nginx (0.2.6)
       puppetlabs-apt (< 2.0.0, >= 1.0.0)
       puppetlabs-concat (< 2.0.0, >= 1.1.1)
@@ -26,6 +29,7 @@ FORGE
       puppetlabs-stdlib (>= 4.0.0)
 
 DEPENDENCIES
+  jdowning-rbenv (= 1.5.1)
   jfryman-nginx (= 0.2.6)
   puppetlabs-git (>= 0)
   puppetlabs-postgresql (>= 0)
