@@ -1,5 +1,6 @@
 forge 'https://forgeapi.puppetlabs.com'
 
+mod 'jdowning-rbenv', '1.5.1'
 mod 'jfryman/nginx', '0.2.6'
 mod 'puppetlabs/git'
 mod 'puppetlabs/postgresql'
